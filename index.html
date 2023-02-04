@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+        integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+        :root{
+            --font-handwritten: 'Itim', cursive;
+
+            --light: #f1d8cb;
+            --dark: #10190d;
+        }
+
+        body {
+            font-family: var(--font-handwritten);
+            background-color: var(--light);
+            color: var(--dark);
+            height: 100vh;
+            width: 100vw;
+            transition: background-color 0.1s ease, color 0.1s ease;
+        }
+
+        #app {
+            width: 40%;
+            margin: 0 auto;
+            text-align: center;
+            border-radius: 8px;
+            padding: 3em;
+            position: absolute;
+            top: 30%;
+            left: 27%;
+        }
+
+        #dark-mode-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        #dark-mode-toggle i {
+            margin-top: 200px;
+            font-size: 1.5em;
+        }
+
+        .dark-mode {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+
+        input,
+        button {
+            background-color: inherit;
+            color: inherit;
+            border: solid;
+            padding: 0.5rem;
+        }
+
+        button {
+            margin: 0.5rem;
+        }
+
+        .delete {
+            width: fit-content;
+        }
+
+        .input {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .dark-mode-toggle i {
+        transition: all 0.3s ease-in-out;
+        }
+
+        .list {
+            padding: 0.5rem;
+        }
+
+        ul {
+            margin: 1rem;
+            list-style: none;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 400px;
+            margin: auto;
+        }
+
+    </style>
+    <script>
+        window.onload = function () {
+            const input = document.querySelector('input[type="text"]');
+            const btn = document.querySelector('button[type="submit"]');
+            const list = document.querySelector('ul#list');
+
+            btn.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const inputValue = input.value.trim();
+
+                if (!inputValue) {
+                    return;
+                }
+
+                const li = document.createElement('li');
+                const deleteBtn = document.createElement('button');
+
+                li.textContent = inputValue;
+                deleteBtn.textContent = '❌';
+
+                li.appendChild(deleteBtn);
+                list.appendChild(li);
+
+                deleteBtn.addEventListener('click', function () {
+                    list.removeChild(li);
+                });
+
+                input.value = '';
+                input.focus();
+            });
+
+            const darkIcon = document.querySelector('#dark-mode-toggle i');
+
+            darkIcon.addEventListener('click', (event) => {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    darkIcon.style.color = "#f1d8cb";
+                    darkIcon.classList.remove('fa-moon');
+                    darkIcon.classList.add('fa-sun');
+                } else {
+                    darkIcon.style.color = "#10190d";
+                    darkIcon.classList.remove('fa-sun');
+                    darkIcon.classList.add('fa-moon');
+                }
+            });
+        }
+
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h1>To-Do List</h1>
+        <form id="add-task-form">
+            <input type="text" placeholder="Add a task">
+            <button type="submit">Add</button>
+        </form>
+        <ul id="list">
+        </ul>
+        <button id="dark-mode-toggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+
+</body>
+</html>
+
